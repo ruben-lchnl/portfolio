@@ -3,7 +3,7 @@
 
 use PDO;
 
-require_once "./DBInfos.php";
+include_once "./model/DBInfos.php";
 
     class DBConnection{
         static $conn = null;
