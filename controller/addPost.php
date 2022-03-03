@@ -38,20 +38,20 @@ use blog\model\PostDB;
                 echo '<br>';
                 echo 'Taille '.$files['size'][$i].' octets';
 
-                $dest .= $files["name"][$i];
+                $dest = $files["name"][$i];
 
                 // Nettoyage du nom de fichier
                 $filesName = preg_replace('/[^a-z0-9\.\-]/i','',$files['name'][$i]);
 
                 // Déplacement depuis le répertoire temporaire si le fichier n'existe pas sinon prévenir l'utilisateur de changer le nom de l'image
-                if(file_exists($dest)){
+                if(file_exists("./imgServ/".$dest)){
                     // message
                     echo "<p>";
                     echo "alert(Le Fichier ".$files["name"][$i] . "existe déjà, veuillez le renomer et réessayer)";
                     echo "</p>";
                     $valid = false;
                 }else{
-                    move_uploaded_file($files['tmp_name'][$i],$dest);
+                    move_uploaded_file($files['tmp_name'][$i],"./imgServ/".$dest);
                 }
 
                 // Si le type MIME correspond à une image, on l’affiche

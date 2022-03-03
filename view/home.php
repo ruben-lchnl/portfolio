@@ -41,12 +41,45 @@
   </section>
   <div class="album py-5 bg-light">
     <div class="container">
+    <?php
+    require_once "./model/postDB.php";
+
+    use Blog\model\DBConnection;
+    use blog\model\PostDB;
+
+    $allPosts = PostDB::SelectAllPost();
+
+    
+
+    // affichage de chaque posts
+    for($i=0;$i<count($allPosts);$i++){
+        $allImg = PostDB::GetAllMediaByIdPosts($allPosts[$i]["idPost"]);
+
+        echo '<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">';
+        echo '<div class="col">';
+        echo '<div class="card shadow-sm">';
+        // affichage de chaque image dans le post
+        for($j=0;$j<count($allImg);$j++){
+          echo '<img src="imgServ/'. $allImg[$j]["nomMedia"].'" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>';
+        }
+        echo '<div class="card-body">';
+        echo '<p class="card-text">'.$allPosts[$i]["commentaire"].'</p>';
+        echo '<button type="button" class="btn btn-secondary"><i class="fa fa-pen"></i></button>';
+        echo '<button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>';
+        echo '<div class="d-flex justify-content-between align-items-center">';
+        echo '<small class="text-muted">publié le '.$allPosts[$i]["creationDate"].'</small>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+    }
+    ?>
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col">
           <div class="card shadow-sm">
             <img src="img/background.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>
-
             <div class="card-body">
               <p class="card-text">Ceci est une belle image</p>
               <div class="d-flex justify-content-between align-items-center">

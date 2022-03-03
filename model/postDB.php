@@ -41,5 +41,27 @@
                 ":idPost" => $id
             ]);
         }
+
+        public static function SelectAllPost(){
+            $db = DBConnection::getConnection();
+
+            $sql = "SELECT * FROM `post` ORDER BY `creationDate` DESC, `modificationDate` DESC";
+            $q = $db->prepare($sql);
+            $q->execute();
+            $result = $q->fetchAll();
+            return $result;
+        }
+
+        public static function GetAllMediaByIdPosts($idPost){
+            $db = DBConnection::getConnection();
+
+            $sql = "SELECT * FROM `media` WHERE idPost=:idPost";
+            $q = $db->prepare($sql);
+            $q->execute([
+                ":idPost" => $idPost
+            ]);
+            $result = $q->fetchAll();
+            return $result;
+        }
     }
 ?>
