@@ -43,8 +43,14 @@ use blog\model\PostDB;
                 // Nettoyage du nom de fichier
                 $filesName = preg_replace('/[^a-z0-9\.\-]/i','',$files['name'][$i]);
 
-                // Déplacement depuis le répertoire temporaire si le fichier n'existe pas
-                if(!file_exists($dest)){
+                // Déplacement depuis le répertoire temporaire si le fichier n'existe pas sinon prévenir l'utilisateur de changer le nom de l'image
+                if(file_exists($dest)){
+                    // message
+                    echo "<p>";
+                    echo "alert(Le Fichier ".$files["name"][$i] . "existe déjà, veuillez le renomer et réessayer)";
+                    echo "</p>";
+                    $valid = false;
+                }else{
                     move_uploaded_file($files['tmp_name'][$i],$dest);
                 }
 
@@ -69,9 +75,13 @@ use blog\model\PostDB;
             $valid = false;
         }
 
+        // envoi dans la base de données seulement si tout les données sont conformes
         if($valid){
             PostDB::AddNewPost($com);
-            //$idPost = 
+            $idPost = PostDB::getLastIdPosts();
+            for($i=0;$i<count($files['name']);$i++){
+                PostDB::AddNewMedia($files["type"][$i],$files["name"][$i],$idPost[0][0]);
+            }
         }
     }
 ?>

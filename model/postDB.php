@@ -29,19 +29,17 @@
             return $result;
         }
 
-        public function AddNewMedia(){
+        public static function AddNewMedia($type,$nom,$id){
             $db = DBConnection::getConnection();
 
-            $id = "SELECT LAST_INSERT_ID()";
-
-            //PDO::lastInsertId()
-
-            $sql = "INSERT INTO `media`(`commentaire`,`creationDate`) VALUES (:comm,:creaDate)";
+            $sql = "INSERT INTO `media`(`typeMedia`,`nomMedia`,`creationDate`,`idPost`) VALUES (:typeMedia,:nom,:creaDate,:idPost)";
             $req = $db->prepare($sql);
-            //$req->execute([
-            //    ":comm" => $commentaire,
-            //    ":creaDate" => $dateAjout
-            //]);
+            $req->execute([
+                ":typeMedia" => $type,
+                ":nom" => $nom,
+                ":creaDate" => date("Y-m-d H:i:s"),
+                ":idPost" => $id
+            ]);
         }
     }
 ?>
