@@ -51,7 +51,8 @@ use blog\model\PostDB;
                     echo "</p>";
                     $valid = false;
                 }else{
-                    move_uploaded_file($files['tmp_name'][$i],"./imgServ/".$dest);
+                    $correctlyMoved = move_uploaded_file($files['tmp_name'][$i],"./imgServ/".$dest);
+                    
                 }
 
                 // Si le type MIME correspond à une image, on l’affiche
@@ -77,10 +78,22 @@ use blog\model\PostDB;
 
         // envoi dans la base de données seulement si tout les données sont conformes
         if($valid){
-            PostDB::AddNewPost($com);
-            $idPost = PostDB::getLastIdPosts();
-            for($i=0;$i<count($files['name']);$i++){
-                PostDB::AddNewMedia($files["type"][$i],$files["name"][$i],$idPost[0][0]);
+            try{
+                $pdo = DBConnection::getConnection();
+
+                $pdo->beginTransaction();
+
+                PostDB::AddNewPost($com);
+                $idPost = PostDB::getLastIdPosts();
+                for($i=0;$i<count($files['name']);$i++){
+                    PostDB::AddNewMedia($files["type"][$i],$files["name"][$i],$idPost[0][0]);
+                }
+
+                $pdo->commmit();
+            }catch(\PDOException $e){
+                $pdo->rollBack();
+
+                var_dump($e);
             }
         }
     }
