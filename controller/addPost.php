@@ -43,9 +43,9 @@ use blog\model\PostDB;
                 // Nettoyage du nom de fichier
                 $filesName = preg_replace('/[^a-z0-9\.\-]/i','',$files['name'][$i]);
 
-                // Déplacement depuis le répertoire temporaire si le fichier n'existe pas sinon prévenir l'utilisateur de changer le nom de l'image
+                // Déplacement depuis le répertoire temporaire si le fichier n'existe pas sinon renommer l'image
                 if(file_exists("./imgServ/".$dest)){
-                    // message
+                    // rennomage
                     echo "<p>";
                     echo "alert(Le Fichier ".$files["name"][$i] . "existe déjà, veuillez le renomer et réessayer)";
                     echo "</p>";
@@ -89,7 +89,7 @@ use blog\model\PostDB;
                     PostDB::AddNewMedia($files["type"][$i],$files["name"][$i],$idPost[0][0]);
                 }
 
-                $pdo->commmit();
+                $pdo->commit();
             }catch(\PDOException $e){
                 $pdo->rollBack();
 
