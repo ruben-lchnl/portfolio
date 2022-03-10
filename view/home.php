@@ -53,14 +53,31 @@
 
     // affichage de chaque posts
     for($i=0;$i<count($allPosts);$i++){
-        $allImg = PostDB::GetAllMediaByIdPosts($allPosts[$i]["idPost"]);
+        $allMedia = PostDB::GetAllMediaByIdPosts($allPosts[$i]["idPost"]);
 
         echo '<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">';
         echo '<div class="col">';
         echo '<div class="card shadow-sm">';
-        // affichage de chaque image dans le post
-        for($j=0;$j<count($allImg);$j++){
-          echo '<img src="imgServ/'. $allImg[$j]["nomMedia"].'" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>';
+        // affichage de chaque media dans le post
+        for($j=0;$j<count($allMedia);$j++){
+          // séparer l'extension du fichier avec son type en général pour récupérer le type
+          $type = explode("/",$allMedia[$j]["typeMedia"]);          
+
+          // si c'est une vidéo le mettre dans la balise corréspondante
+          if(strtolower($type[0]) == "video"){
+            echo '<video width="320" height="240" autoplay loop>
+            <source src="imgServ/'. $allMedia[$j]["nomMedia"] .'" type="video/mp4">
+          La vidéo galère à s\'afficher
+          </video>';
+          }
+          // si c'est une vidéo le mettre dans la balise corréspondante
+          if(strtolower($type[0]) == "audio"){
+
+          }
+          // si c'est une vidéo le mettre dans la balise corréspondante
+          if(strtolower($type[0]) == "image"){
+            echo '<img src="imgServ/'. $allMedia[$j]["nomMedia"].'" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>';
+          }
         }
         echo '<div class="card-body">';
         echo '<p class="card-text">'.$allPosts[$i]["commentaire"].'</p>';

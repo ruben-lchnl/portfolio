@@ -18,17 +18,23 @@ use blog\model\PostDB;
         // Boucle itérant sur chacun des fichiers
         for($i=0;$i<count($files['name']);$i++){
 
-            $totalSize += $files["size"][$i];
+            if($files["type"][$i] != "video/mp4"){
+                $totalSize += $files["size"][$i];
+            }
 
             //vérifie que la taille du fichier ne dépace pas 3Mo
-            if($files["size"][$i] > 3000000){
+            if($files["size"][$i] > 3000000 && $files["type"][$i] != "video/mp4"){
                 echo "<p>";
                 echo "Votre fichier : ".$files["name"][$i]. " à une taille supérieur à 3Mo, Veuillez en choisir un plus petit";
                 echo "</p>";
                 $valid = false;
             }
+
+            // séparer l'extension du fichier avec son type en général pour récupérer le type
+            $type = explode("/",$files["type"][$i]);
+
             // vérifie que les fichier ont le bon type de données
-            if($files["type"][$i] == "image/png" || $files["type"][$i] == "image/jpeg" || $files["type"][$i] == "image/gif"){
+            if(strtolower($type[0]) == "image" || strtolower($type[0]) == "video" || strtolower($type[0]) == "audio"){
                 
                 // Affichage d’informations diverses
                 echo '<p>';

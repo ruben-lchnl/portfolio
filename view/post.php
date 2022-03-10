@@ -38,7 +38,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="formFileMultiple" class="form-label">Insérez média</label>
-                    <input class="form-control" name="img[]" type="file" accept="image/jpeg,image/png,image/gif" id="formFileMultiple" multiple>
+                    <input class="form-control" name="img[]" type="file" accept="image/*,audio/*,video/*" id="formFileMultiple" multiple>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Envoi">
             </form>

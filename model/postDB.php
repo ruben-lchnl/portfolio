@@ -55,7 +55,7 @@
         public static function GetAllMediaByIdPosts($idPost){
             $db = DBConnection::getConnection();
 
-            $sql = "SELECT * FROM `media` WHERE idPost=:idPost";
+            $sql = "SELECT * FROM `media` WHERE idPost=:idPost ORDER BY `creationDate` DESC, `modificationDate` DESC";
             $q = $db->prepare($sql);
             $q->execute([
                 ":idPost" => $idPost
