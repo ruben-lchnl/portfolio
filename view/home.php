@@ -65,14 +65,17 @@
 
           // si c'est une vidéo le mettre dans la balise corréspondante
           if(strtolower($type[0]) == "video"){
-            echo '<video width="320" height="240" autoplay loop>
+            echo '<video width="320" height="240" controls autoplay loop>
             <source src="imgServ/'. $allMedia[$j]["nomMedia"] .'" type="video/mp4">
           La vidéo galère à s\'afficher
           </video>';
           }
           // si c'est une vidéo le mettre dans la balise corréspondante
           if(strtolower($type[0]) == "audio"){
-
+            echo'<audio controls>
+            <source src="imgServ/'. $allMedia[$j]["nomMedia"] .'" type="audio/ogg">
+          L\'audio ne réponds pas
+          </audio>';
           }
           // si c'est une vidéo le mettre dans la balise corréspondante
           if(strtolower($type[0]) == "image"){
