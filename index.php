@@ -9,6 +9,9 @@
         case "post":
             include("view/post.php");
         break;
+        case "delete":
+            include("controller/supprPost.php");
+        break;
     }
 
 ?>

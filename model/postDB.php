@@ -1,5 +1,5 @@
 <?php
-    namespace blog\model;
+    namespace Blog\model;
 
     use Blog\model\DBConnection;
 
@@ -56,6 +56,28 @@
             $db = DBConnection::getConnection();
 
             $sql = "SELECT * FROM `media` WHERE idPost=:idPost ORDER BY `creationDate` DESC, `modificationDate` DESC";
+            $q = $db->prepare($sql);
+            $q->execute([
+                ":idPost" => $idPost
+            ]);
+            $result = $q->fetchAll();
+            return $result;
+        }
+
+        public static function DeletePostById($idPost){
+            $db = DBConnection::getConnection();
+
+            $sql = "DELETE FROM `post` WHERE idPost=:idPost";
+            $q = $db->prepare($sql);
+            $q->execute([
+                ":idPost" => $idPost
+            ]);
+        }
+
+        public static function GetAllImagesForDelete($idPost){
+            $db = DBConnection::getConnection();
+
+            $sql = "SELECT `nomMedia` FROM `media` WHERE idPost=:idPost";
             $q = $db->prepare($sql);
             $q->execute([
                 ":idPost" => $idPost

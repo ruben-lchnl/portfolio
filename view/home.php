@@ -1,5 +1,5 @@
 <?php
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,8 +44,7 @@
     <?php
     require_once "./model/postDB.php";
 
-    use Blog\model\DBConnection;
-    use blog\model\PostDB;
+    use Blog\model\PostDB;
 
     $allPosts = PostDB::SelectAllPost();
 
@@ -84,11 +83,30 @@
         }
         echo '<div class="card-body">';
         echo '<p class="card-text">'.$allPosts[$i]["commentaire"].'</p>';
-        echo '<button type="button" class="btn btn-secondary"><i class="fa fa-pen"></i></button>';
-        echo '<button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>';
+        echo '<a href="./controller/supprPost.php?idPost='. $allPosts[$i]["idPost"].'" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-pen"></i></a>';
+        echo '<a href="index.php?nav=delete&idPost='. $allPosts[$i]["idPost"].'"type="button" class="btn btn-danger"><i class="fa fa-trash"></i></a>';
         echo '<div class="d-flex justify-content-between align-items-center">';
         echo '<small class="text-muted">publié le '.$allPosts[$i]["creationDate"].'</small>';
         echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        
+        // Modal de supprression
+        echo '<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+        echo '<div class="modal-dialog">';
+        echo '<div class="modal-content">';
+        echo '<div class="modal-header">';
+        echo '<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>';
+        echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+        echo '</div>';
+        echo '<div class="modal-body">';
+        echo '...';
+        echo '</div>';
+        echo '<div class="modal-footer">';
+        echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
+        echo '<button type="button" class="btn btn-primary">Save changes</button>';
         echo '</div>';
         echo '</div>';
         echo '</div>';

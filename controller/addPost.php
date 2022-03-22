@@ -2,7 +2,7 @@
     require_once "./model/postDB.php";
 
     use Blog\model\DBConnection;
-use blog\model\PostDB;
+use Blog\model\PostDB;
 
     $com = filter_input(INPUT_POST,"commentaire",FILTER_SANITIZE_STRING);
     
