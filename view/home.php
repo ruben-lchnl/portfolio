@@ -83,7 +83,7 @@
         }
         echo '<div class="card-body">';
         echo '<p class="card-text">'.$allPosts[$i]["commentaire"].'</p>';
-        echo '<a href="./controller/supprPost.php?idPost='. $allPosts[$i]["idPost"].'" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-pen"></i></a>';
+        echo '<a href="index.php?nav=update&idPost='. $allPosts[$i]["idPost"].'" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-pen"></i></a>';
         echo '<a href="index.php?nav=delete&idPost='. $allPosts[$i]["idPost"].'"type="button" class="btn btn-danger"><i class="fa fa-trash"></i></a>';
         echo '<div class="d-flex justify-content-between align-items-center">';
         echo '<small class="text-muted">publié le '.$allPosts[$i]["creationDate"].'</small>';
@@ -113,20 +113,6 @@
         echo '</div>';
     }
     ?>
-
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="img/background.jpg" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/>
-            <div class="card-body">
-              <p class="card-text">Ceci est une belle image</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">probablement, il y a plus de 5 min</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </body>

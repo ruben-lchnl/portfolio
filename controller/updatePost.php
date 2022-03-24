@@ -2,10 +2,19 @@
     require_once "./model/postDB.php";
 
     use Blog\model\DBConnection;
-use Blog\model\PostDB;
+    use Blog\model\PostDB;
+
+    $idPost = $_GET["idPost"];
+    $idPost!=null?$_GET["idPost"]:null;
 
     $com = filter_input(INPUT_POST,"commentaire",FILTER_SANITIZE_STRING);
-    
+
+    $mediaNames = [];
+
+    if($idPost){
+        $infos = PostDB::GetPostsById($idPost);
+    }
+    // si on ajout une/des images
     if(isset($_FILES) && $_FILES["img"]["name"][0] != null && is_array($_FILES) && count($_FILES)>0){
         $files = $_FILES["img"];
 
@@ -44,7 +53,9 @@ use Blog\model\PostDB;
                 echo '<br>';
                 echo 'Taille '.$files['size'][$i].' octets';
 
-                $dest = $files["name"][$i];
+                $dest = $idPost. uniqid(). $files["name"][$i];
+
+                $mediaNames += $dest;
 
                 // Nettoyage du nom de fichier
                 $filesName = preg_replace('/[^a-z0-9\.\-]/i','',$files['name'][$i]);
@@ -53,12 +64,11 @@ use Blog\model\PostDB;
                 if(file_exists("./imgServ/".$dest)){
                     // rennomage
                     echo "<p>";
-                    echo "alert(Le Fichier ".$files["name"][$i] . "existe déjà, veuillez le renomer et réessayer)";
+                    echo "alert(veuillez réessayer)";
                     echo "</p>";
                     $valid = false;
                 }else{
                     $correctlyMoved = move_uploaded_file($files['tmp_name'][$i],"./imgServ/".$dest);
-                    
                 }
 
                 // Si le type MIME correspond à une image, on l’affiche
@@ -89,10 +99,8 @@ use Blog\model\PostDB;
 
                 $pdo->beginTransaction();
 
-                PostDB::AddNewPost($com);
-                $idPost = PostDB::getLastIdPosts();
                 for($i=0;$i<count($files['name']);$i++){
-                    PostDB::AddNewMedia($files["type"][$i],$files["name"][$i],$idPost[0][0]);
+                    PostDB::AddNewMedia($files["type"][$i],$mediaNames[$i],$idPost);
                 }
 
                 $pdo->commit();
@@ -103,4 +111,7 @@ use Blog\model\PostDB;
             }
         }
     }
-?>
+    // si on modifie le commentaires
+    if($com != $infos[0]["commentaire"] && $com != null){
+        PostDB::ModifyComm($idPost, $com);
+    }
