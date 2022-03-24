@@ -113,5 +113,17 @@
     }
     // si on modifie le commentaires
     if($com != $infos[0]["commentaire"] && $com != null){
-        PostDB::ModifyComm($idPost, $com);
+        try{
+            $pdo = DBConnection::getConnection();
+
+            $pdo->beginTransaction();
+
+            PostDB::ModifyComm($idPost, $com);
+            
+            $pdo->commit();
+        }catch(\PDOException $e){
+            $pdo->rollBack();
+
+            var_dump($e);
+        }
     }
